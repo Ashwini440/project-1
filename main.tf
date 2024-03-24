@@ -8,7 +8,7 @@ resource "aws_instance" "test-server" {
     ami = "ami-007020fd9c84e18c7"
     instance_type = "t2.micro"  
     key_name = "project-1"
-    
+    count = var.count_instance
     tags = {
            Name = "production server"
    }       
