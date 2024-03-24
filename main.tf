@@ -8,7 +8,6 @@ resource "aws_vpc" "main" {
   tags = {
     Name = "${terraform.workspace}-${var.projectname}"
   }
-
 }
 
 # Setup public subnet
