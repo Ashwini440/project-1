@@ -34,7 +34,7 @@ variable "name_tag" {
    description = "Name of the EC2 instance"
    default     = "My EC2 Instance"
 }
-variable "region" {
+variable "ec2_region" {
     description = "This varaible declares the region "
     type = string
 }
