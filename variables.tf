@@ -1,50 +1,3 @@
-variable "projectname" {
-  type        = string
-  description = "This variable indicates project name"
-}
-variable "region" {
-  description = "This variable declares region"
-  type = string
-  
-}
-variable "vpc_cidr" {
-  type        = string
-  description = "Public Subnet vpc cidr value"
-}
-
-variable "cidr_public_subnet" {
-  type        = string
-  description = "Public Subnet CIDR values"
-}
-
-variable "cidr_private_subnet" {
-  type        = string
-  description = "Private Subnet CIDR values"
-}
-
-variable "availability_zone" {
-  type        = string
-  description = "Availability Zones"
-}
-variable "key_name" {
-  description = "The name of the SSH key pair."
-}
-
-variable "public_key" {
-  description = "The public key content."
-}
-
-variable "ami_id" {
-  description = "This variable indicates ami id"
-  type = string
-}
-variable "instance_type" {
-  description = "This variable indicates Instance type"
-  type = string
-}
-variable "config" {
-   default = {}
-   }
 variable "aws_access_key" {
   description = "AWS access key"
   type        = string
@@ -55,4 +8,29 @@ variable "aws_secret_key" {
   description = "AWS secret key"
   type        = string
   default     = ""
+}
+
+variable "aws_region" {
+  description = "AWS region"
+  type        = string
+  default     = "ap-south-1"
+}
+
+
+variable "ami" {
+   type        = string
+   description = "Ubuntu AMI ID"
+   default     = "ami-0f5ee92e2d63afc18"
+}
+
+variable "instance_type" {
+   type        = string
+   description = "Instance type"
+   default     = "t2.micro"
+}
+
+variable "name_tag" {
+   type        = string
+   description = "Name of the EC2 instance"
+   default     = "My EC2 Instance"
 }
