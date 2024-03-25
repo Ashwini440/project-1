@@ -9,6 +9,5 @@ terraform {
 
 # Configure the AWS Provider
 provider "aws" {
-  ec2_region = var.ec2_region
 }
  
