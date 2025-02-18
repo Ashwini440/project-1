@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+    environment {
+        MAVEN_HOME = "/opt/apache-maven-3.9.9"
+        PATH = "$PATH:$MAVEN_HOME/bin"
+        AWS_REGION = "us-east-1"
+        ECR_REPO = "881490092139.dkr.ecr.us-east-1.amazonaws.com/project-1"
+        TAG = "latest"
+    }
+    stages {
+        stage('git checkout') {
+            steps {
+                git credentialsId: 'github-username', url: 'https://github.com/Ashwini440/project-1.git'
+            }
+        }
+        stage('maven build') {
+            steps {
+               sh 'mvn package'
+            }
+        }
+        stage('docker image build & create container') {
+             steps {
+                sh 'docker build -t project-1:latest .'
+            }
+        }    
+        stage('login to ECR') {
+             steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding', 
+                    credentialsId: 'aws',  // Use the 'aws' credentials ID
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                    sh '''
+                        # Authenticate Docker to ECR
+                        aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin 881490092139.dkr.ecr.us-east-1.amazonaws.com
+                    ''' // Missing closing '}' here for 'withCredentials'
+                }  // Closing brace should be here for 'withCredentials' block
+               }
+           } 
+           stage('push image to ECR') {
+               steps {
+                   sh '''docker tag project-1:latest 881490092139.dkr.ecr.us-east-1.amazonaws.com/project-1:latest
+                         docker push 881490092139.dkr.ecr.us-east-1.amazonaws.com/project-1:latest'''
+               }
+           }
+        }
+        
+    }
+
