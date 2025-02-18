@@ -23,7 +23,7 @@ pipeline {
                 sh 'docker build -t project-1:latest .'
             }
         }    
-        stage('login to ECR') {
+        stage('login to ECR') {     //for docker login you need to create a repo in ecr and should install awscli in jenkins server and install plugins
              steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding', 
