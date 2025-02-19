@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project-1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: project-1
+  template:
+    metadata:
+      labels:
+        app: project-1
+    spec:
+      containers:
+        - name: project-1
+          image: 881490092139.dkr.ecr.us-east-1.amazonaws.com/project-1:latest
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: project-1-service
+spec:
+  selector:
+    app: project-1  # This matches the label in the deployment
+  ports:
+    - protocol: TCP
+      port: 80           # Exposed service port
+      targetPort: 8080    # Port inside the container
+  type: LoadBalancer    # Exposes the service to the internet
