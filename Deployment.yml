@@ -29,5 +29,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80           # Exposed service port
-      targetPort: 8080    # Port inside the container
+      targetPort: 8081    # Port inside the container
   type: LoadBalancer    # Exposes the service to the internet
